@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AiOutlinePlusCircle} from 'react-icons/ai'
+import { AiOutlinePlusCircle,AiOutlineMinusCircle} from 'react-icons/ai'
 // AiOutlinePlusCircle
 const Container = styled.div`
 width: 100vw;
@@ -111,6 +111,15 @@ const Register = () => {
                     <Form>
                         <Input type="text" name='firstName' value={data.firstName.value} onChange={handleOnChangeInputField} required placeholder="Fist Name" /> <br/>
                         <Input type="text" name='email' value={data.email.value} onChange={handleOnChangeInputField} required placeholder="Email" /><AiOutlinePlusCircle  onClick={addMultipleEmail}/><br/>
+                        {bulkEmail.map((item,index)=>{
+                            return(
+                                <>
+                                
+                                    <p>{item}</p><AiOutlineMinusCircle />
+                                
+                                </>
+                            )
+                        })}
                         <Input type="text" name='phone'  value={data.phone.value} onChange={handleOnChangeInputField} required placeholder="Phone No" /><AiOutlinePlusCircle onClick={addMultiplePhoneno} /><br/>
                         <Button type='submit' onClick={apihandler}>Submit</Button>
 
