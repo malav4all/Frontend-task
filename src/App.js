@@ -1,11 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Register from "./component/Register";
+import Stepone from "./component/step-one";
 
 function App() {
   return (
     <div className="App">
-      <Register />
+      <Stepone />
     </div>
   );
 }
