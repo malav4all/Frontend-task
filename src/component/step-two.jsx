@@ -1,103 +1,81 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {AiOutlinePlusCircle, AiOutlineMinusCircle} from 'react-icons/ai';
-// AiOutlinePlusCircle
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url('/image/regiterBackground.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 40%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
-`;
-
-const Form = styled.form``;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0 0;
-  padding: 10px;
-`;
-
-const Agreement = styled.span`
-  font-size: 13px;
-  margin-top: 20px;
-`;
-
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 12px 18px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin: 20px 0px;
-`;
 
 const StepTwo = (props) => {
   return (
     <>
-      <Container>
-        <Wrapper>
-          <Input
-            type="date"
-            name="dob"
-            value={props?.dob?.firstName.value}
-            onChange={props.handleOnChangeInputField}
-            required
-            placeholder="Fist Name"
-          />{' '}
-          <br />
-          <label>Profile Image</label>
-          <Input
-            type="file"
-            name="file"
-            onChange={(e) =>
-              props.profileImageUpload && props.profileImageUpload(e)
-            }
-            required
-            placeholder="Email"
-          />
-          <br />
-          <label>Aadhar Image</label>
-          <Input
-            type="file"
-            name="aadharImage"
-            onChange={(e) =>
-              props.profileImageUpload && props.aadharImageUpload(e)
-            }
-            required
-          />
-          <br />
-          <Button type="submit" onClick={() => props.back()}>
-            Back
-          </Button>
-          <br />
-          <input
-            value="Submit"
+      <div className="container mt-10">
+        <div className="mb-3 row form-group ">
+          <label for="staticEmail" className="col-sm-2 col-form-label">
+            DOB
+          </label>
+          <div className="col-sm-6">
+            <input
+              type="date"
+              name="dob"
+              className="form-control"
+              value={props?.dob?.firstName.value}
+              onChange={props.handleOnChangeInputField}
+              required
+              id="staticEmail"
+              placeholder="Please Enter Name"
+            />
+          </div>
+        </div>
+        <div className="mb-1 row form-group">
+          <label for="inputPassword" className="col-sm-2 col-form-label">
+            ProfileImage
+          </label>
+          <div className="col-sm-6">
+            <input
+              type="file"
+              className="form-control"
+              name="file"
+              onChange={(e) =>
+                props.profileImageUpload && props.profileImageUpload(e)
+              }
+              id="exampleFormControlInput1"
+              placeholder="name@example.com"
+            />
+          </div>
+        </div>
+        <div className="mb-1 row form-group">
+          <label for="inputPassword" className="col-sm-2 col-form-label">
+            Aadhar Image
+          </label>
+          <div className="col-sm-6 form-group">
+            <input
+              type="file"
+              name="aadharImage"
+              onChange={(e) =>
+                props.aadharImageUpload && props.aadharImageUpload(e)
+              }
+              className="form-control"
+              id="exampleFormControlInput1"
+              placeholder="Please Enter Phone No"
+            />
+          </div>
+        </div>
+
+        <br />
+        <div className="d-flex justify-content-evenly">
+          <button
+            type="button"
+            onClick={() => props.back()}
+            class="btn btn-primary col-sm-2"
+          >
+            back
+          </button>
+          <button
             type="button"
             onClick={() => props.apihandler && props.apihandler()}
-          />
-        </Wrapper>
-      </Container>
+            class="btn btn-primary col-sm-2"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </>
   );
 };

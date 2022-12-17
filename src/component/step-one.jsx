@@ -4,55 +4,6 @@ import {AiOutlinePlusCircle, AiOutlineMinusCircle} from 'react-icons/ai';
 import StepTwo from './step-two';
 import axios from 'axios';
 // AiOutlinePlusCircle
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url('/image/regiterBackground.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-  width: 40%;
-  padding: 20px;
-  background-color: white;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
-`;
-
-const Form = styled.form``;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 20px 10px 0 0;
-  padding: 10px;
-`;
-
-const Agreement = styled.span`
-  font-size: 13px;
-  margin-top: 20px;
-`;
-
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 12px 18px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin: 20px 0px;
-`;
 
 const StepOne = () => {
   const [data, setData] = useState({
@@ -99,11 +50,25 @@ const StepOne = () => {
     let emailArray = [];
     emailArray.push(...bulkEmail, data.email.value);
     setBulkEmail(emailArray);
+    setData({
+      ...data,
+      email: {
+        ...data['email'],
+        value: '',
+      },
+    });
   };
   const addMultiplePhoneno = () => {
     let phoneArray = [];
     phoneArray.push(...bulkPhone, data.phone.value);
     setBulkPhone(phoneArray);
+    setData({
+      ...data,
+      phone: {
+        ...data['phone'],
+        value: '',
+      },
+    });
   };
 
   const profileImageUpload = (event) => {
@@ -136,11 +101,25 @@ const StepOne = () => {
     if (promise.status === 200) {
       alert('Record Insert Successfully');
       setActive(0);
+      setBulkEmail([]);
+      setBulkPhone([]);
     } else {
       alert('Something Went Wrong');
     }
   };
 
+  const removeMultipleEmail = (index) => {
+    const firstArr = bulkEmail.slice(0, index) || [];
+    const secondArr = bulkEmail.slice(index + 1) || [];
+    const finalArr = [...firstArr, ...secondArr];
+    setBulkEmail(finalArr);
+  };
+  const removeMultiplePhone = (index) => {
+    const firstArr = bulkPhone.slice(0, index) || [];
+    const secondArr = bulkPhone.slice(index + 1) || [];
+    const finalArr = [...firstArr, ...secondArr];
+    setBulkPhone(finalArr);
+  };
   const formView = () => {
     switch (active) {
       case 1:
@@ -156,53 +135,123 @@ const StepOne = () => {
         );
       default:
         return (
-          <Container>
-            <Wrapper>
-              <Title>CREATE AN ACCOUNT</Title>
-              {/* <Form> */}
-              <Input
-                type="text"
-                name="firstName"
-                value={data.firstName.value}
-                onChange={handleOnChangeInputField}
-                required
-                placeholder="Fist Name"
-              />{' '}
-              <br />
-              <Input
-                type="text"
-                name="email"
-                value={data.email.value}
-                onChange={handleOnChangeInputField}
-                required
-                placeholder="Email"
-              />
-              <AiOutlinePlusCircle onClick={addMultipleEmail} />
-              <br />
+          <>
+            <div className="container">
+              <h1>Create Account</h1>
+              <div className="mb-3 row form-group ">
+                <label for="staticEmail" className="col-sm-2 col-form-label">
+                  Name
+                </label>
+                <div className="col-sm-6">
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={data.firstName.value}
+                    className="form-control"
+                    onChange={handleOnChangeInputField}
+                    required
+                    id="staticEmail"
+                    placeholder="Please Enter Name"
+                  />
+                </div>
+              </div>
+              <div className="mb-1 row form-group">
+                <label for="inputPassword" className="col-sm-2 col-form-label">
+                  Email
+                </label>
+                <div className="col-sm-6">
+                  <input
+                    type="email"
+                    className="form-control"
+                    name="email"
+                    value={data.email.value}
+                    onChange={handleOnChangeInputField}
+                    id="exampleFormControlInput1"
+                    placeholder="name@example.com"
+                  />
+                </div>
+                <div className="col-sm-2">
+                  <button
+                    type="submit"
+                    onClick={addMultipleEmail}
+                    className="btn btn-primary mb-3"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
               {bulkEmail.map((item, index) => {
                 return (
                   <>
-                    <p>{item}</p>
-                    <AiOutlineMinusCircle />
+                    <div className="row">
+                      <div className="col-sm-6"> {item}</div>
+                      <div className="col-sm-2">
+                        <button
+                          type="submit"
+                          onClick={() => removeMultipleEmail(index)}
+                          className="btn btn-primary mb-3"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
                   </>
                 );
               })}
-              <Input
-                type="text"
-                name="phone"
-                value={data.phone.value}
-                onChange={handleOnChangeInputField}
-                required
-                placeholder="Phone No"
-              />
-              <AiOutlinePlusCircle onClick={addMultiplePhoneno} />
+              <div className="mb-1 row form-group">
+                <label for="inputPassword" className="col-sm-2 col-form-label">
+                  Phone No
+                </label>
+                <div className="col-sm-6 form-group">
+                  <input
+                    type="number"
+                    name="phone"
+                    value={data.phone.value}
+                    onChange={handleOnChangeInputField}
+                    className="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Please Enter Phone No"
+                  />
+                </div>
+
+                <div className="col-sm-2">
+                  <button
+                    type="submit"
+                    onClick={addMultiplePhoneno}
+                    className="btn btn-primary mb-3"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+              {bulkPhone.map((item, index) => {
+                return (
+                  <>
+                    <div className="row">
+                      <div className="col-sm-6"> {item}</div>
+                      <div className="col-sm-2">
+                        <button
+                          type="submit"
+                          onClick={() => removeMultiplePhone(index)}
+                          className="btn btn-primary mb-3"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
               <br />
-              <Button type="submit" onClick={next}>
+              <button
+                type="button"
+                onClick={next}
+                class="btn btn-primary col-sm-2"
+              >
                 Next
-              </Button>
-              {/* </Form> */}
-            </Wrapper>
-          </Container>
+              </button>
+            </div>
+          </>
         );
     }
   };
