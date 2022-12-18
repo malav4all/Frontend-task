@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
-import {AiOutlinePlusCircle, AiOutlineMinusCircle} from 'react-icons/ai';
 import StepTwo from './step-two';
 import axios from 'axios';
 // AiOutlinePlusCircle
@@ -84,27 +82,31 @@ const StepOne = () => {
     });
   };
   const apihandler = async () => {
-    const formData = new FormData();
-    formData.append('firstName', data.firstName.value);
-    formData.append('email', JSON.stringify(bulkEmail));
-    formData.append('phone', JSON.stringify(bulkPhone));
-    formData.append('dob', data.dob.value);
-    formData.append('profileImage', data.profileImage);
-    formData.append('aadharImage', data.aadharPic);
-    const promise = await axios.post(
-      'http://localhost:5000/register',
-      formData,
-      {
-        'content-type': 'multipart/form-data',
+    try {
+      const formData = new FormData();
+      formData.append('firstName', data.firstName.value);
+      formData.append('email', JSON.stringify(bulkEmail));
+      formData.append('phone', JSON.stringify(bulkPhone));
+      formData.append('dob', data.dob.value);
+      formData.append('profileImage', data.profileImage);
+      formData.append('aadharImage', data.aadharPic);
+      const promise = await axios.post(
+        'http://localhost:5000/register',
+        formData,
+        {
+          'content-type': 'multipart/form-data',
+        }
+      );
+      if (promise.status === 200) {
+        alert('Record Insert Successfully');
+        setActive(0);
+        setBulkEmail([]);
+        setBulkPhone([]);
+      } else {
+        alert('Something Went Wrong');
       }
-    );
-    if (promise.status === 200) {
-      alert('Record Insert Successfully');
-      setActive(0);
-      setBulkEmail([]);
-      setBulkPhone([]);
-    } else {
-      alert('Something Went Wrong');
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
