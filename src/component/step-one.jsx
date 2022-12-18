@@ -46,8 +46,12 @@ const StepOne = () => {
   };
   const addMultipleEmail = () => {
     let emailArray = [];
-    emailArray.push(...bulkEmail, data.email.value);
-    setBulkEmail(emailArray);
+    if (data.email.value.length !== 0) {
+      emailArray.push(...bulkEmail, data.email.value);
+      setBulkEmail(emailArray);
+    } else {
+      alert('Please Insert Email');
+    }
     setData({
       ...data,
       email: {
@@ -58,8 +62,12 @@ const StepOne = () => {
   };
   const addMultiplePhoneno = () => {
     let phoneArray = [];
-    phoneArray.push(...bulkPhone, data.phone.value);
-    setBulkPhone(phoneArray);
+    if (data.phone.value.length !== 0) {
+      phoneArray.push(...bulkPhone, data.phone.value);
+      setBulkPhone(phoneArray);
+    } else {
+      alert('Please Enter Phone NO');
+    }
     setData({
       ...data,
       phone: {
